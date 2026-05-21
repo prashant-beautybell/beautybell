@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from "react";
+import { PageHero } from "../components/layout/PageHero";
 import { Button } from "../components/ui/Button";
 import { SEO } from "../components/ui/SEO";
+import { staticPageHeroes } from "../data/pageHeroes";
 
 const faqs = [
   {
@@ -36,20 +38,12 @@ export function ContactPage() {
         description="Get in touch with BeautyBell customer service. We're here to help with orders, product questions, and more."
       />
 
-      <section className="section-padding bg-cream">
-        <div className="container-luxury text-center">
-          <div className="mx-auto mb-8 h-px w-14 bg-gradient-to-r from-transparent via-champagne/55 to-transparent" />
-          <p className="font-sans text-[10px] font-medium uppercase tracking-[0.28em] text-ink-faint">
-            Concierge
-          </p>
-          <h1 className="mt-5 font-wordmark text-[clamp(2rem,4vw,3.25rem)] font-normal tracking-[-0.02em] text-ink">
-            Correspondence
-          </h1>
-          <p className="mx-auto mt-6 max-w-lg font-sans text-sm font-light leading-relaxed text-ink-light">
-            We reply with the same punctuality we expect from our pigments. Hours for the desk are listed beside.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        image={staticPageHeroes.contact.image}
+        eyebrow={staticPageHeroes.contact.eyebrow}
+        title={staticPageHeroes.contact.title}
+        description={staticPageHeroes.contact.description}
+      />
 
       <section className="section-padding">
         <div className="container-luxury">

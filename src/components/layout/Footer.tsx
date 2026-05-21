@@ -249,7 +249,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Beauty Bell London. All rights reserved.
           </p>
           <p className="font-sans text-[11px] text-ink-faint">
-            Atelier formulations · Cruelty free · Made in the UK
+            Made in the UK
           </p>
         </div>
       </div>

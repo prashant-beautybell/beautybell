@@ -1,6 +1,8 @@
 export interface HeroSlide {
   id: string;
   image: string;
+  /** Background loop (local path or Pexels CDN) */
+  video?: string;
   eyebrow: string;
   title: string;
   titleLine2?: string;
@@ -8,47 +10,47 @@ export interface HeroSlide {
   href: string;
 }
 
+/** One slide per hero video — copy is brand-wide so it fits any beauty B-roll */
 export const heroSlides: HeroSlide[] = [
   {
-    id: "glass-skin",
+    id: "atelier",
     image:
-      "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=1920&q=85",
-    eyebrow: "New",
-    title: "Glass Skin",
-    titleLine2: "Capsule",
-    cta: "Shop serums",
+      "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=1280&q=80",
+    video: "/videos/hero-6473746.mp4",
+    eyebrow: "Beauty Bell",
+    title: "Atelier",
+    titleLine2: "Skincare",
+    cta: "Shop the collection",
     href: "/category/skincare",
   },
   {
-    id: "cleanse",
+    id: "ritual",
     image:
-      "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1920&q=85",
-    eyebrow: "Ritual",
-    title: "Cleanse &",
-    titleLine2: "Restore",
-    cta: "Shop cleanse",
+      "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1280&q=80",
+    video: "/videos/hero-3181791.mp4",
+    eyebrow: "The ritual",
+    title: "Luminous",
+    titleLine2: "Restraint",
+    cta: "Explore cleanse",
     href: "/category/face",
   },
   {
-    id: "vitamin-c",
+    id: "formula",
     image:
-      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1920&q=85",
-    eyebrow: "Bestseller",
-    title: "Vitamin C",
-    titleLine2: "Serum",
-    cta: "Discover",
-    href: "/product/vitamin-c-serum",
-  },
-  {
-    id: "spf",
-    image:
-      "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1920&q=85",
-    eyebrow: "Daily defence",
-    title: "SPF 50",
-    titleLine2: "Sun Veil",
-    cta: "Shop protect",
-    href: "/category/lips",
+      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1280&q=80",
+    video: "/videos/hero-5468955.mp4",
+    eyebrow: "Formulation",
+    title: "Refined",
+    titleLine2: "Actives",
+    cta: "View serums",
+    href: "/category/skincare",
   },
 ];
 
-export const HERO_AUTOPLAY_MS = 6000;
+export const HERO_AUTOPLAY_MS = 7000;
+
+/** Crossfade duration for hero video (ms) */
+export const HERO_CROSSFADE_MS = 1400;
+
+/** Delay before headline swaps — keeps copy aligned with visible video */
+export const HERO_TEXT_SWAP_MS = HERO_CROSSFADE_MS;

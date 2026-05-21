@@ -145,7 +145,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-ink/[0.08] bg-white text-ink">
       <div className="container-luxury relative flex h-[4.5rem] items-center md:h-[5rem]">
-        <Logo variant="header" tone="dark" className="relative z-10 shrink-0" />
+        <Logo variant="header" tone="dark" animated={false} className="relative z-10 shrink-0" />
 
         <nav
           className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:flex lg:items-center lg:gap-8 xl:gap-10"

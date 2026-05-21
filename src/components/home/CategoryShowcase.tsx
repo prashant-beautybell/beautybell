@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
+import { categoryThumbImages } from "../../data/pageHeroes";
 import { categories } from "../../data/products";
-
-const categoryImages: Record<string, string> = {
-  face: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=720&q=80",
-  skincare: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=720&q=80",
-  eyes: "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=720&q=80",
-  lips: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=720&q=80",
-};
 
 export function CategoryShowcase() {
   return (
@@ -32,7 +26,7 @@ export function CategoryShowcase() {
               className="group relative aspect-[10/13] overflow-hidden bg-surface lg:aspect-[11/14]"
             >
               <img
-                src={categoryImages[cat.id]}
+                src={categoryThumbImages[cat.id]}
                 alt=""
                 loading="lazy"
                 className="h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"

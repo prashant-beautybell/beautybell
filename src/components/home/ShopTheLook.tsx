@@ -95,20 +95,17 @@ export function ShopTheLook() {
                     }`}
                     loading="lazy"
                   />
-                  {!failed && (
+                  {isPlaying && !failed && (
                     <video
                       ref={(el) => {
                         videoRefs.current[moment.id] = el;
                       }}
                       src={moment.video}
-                      poster={moment.poster}
-                      className={`absolute inset-0 h-full w-full object-cover ${
-                        isPlaying ? "opacity-100" : "opacity-0"
-                      }`}
+                      className="absolute inset-0 h-full w-full object-cover opacity-100"
                       muted
                       loop
                       playsInline
-                      preload="metadata"
+                      preload="auto"
                       onError={() =>
                         setLoadErrors((e) => ({ ...e, [moment.id]: true }))
                       }

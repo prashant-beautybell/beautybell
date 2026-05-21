@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { PageHero } from "../components/layout/PageHero";
 import { Button } from "../components/ui/Button";
 import { SEO } from "../components/ui/SEO";
+import { staticPageHeroes } from "../data/pageHeroes";
 
 const team = [
   {
@@ -33,24 +35,11 @@ export function AboutPage() {
         description="Learn about BeautyBell's mission, values, and the passion behind our premium luxury cosmetics brand."
       />
 
-      <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1920&q=80"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-          aria-hidden
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-midnight/85 via-midnight/55 to-midnight/80" />
-        <div className="container-luxury relative py-28 text-center text-white md:py-32">
-          <div className="mx-auto mb-8 h-px w-14 bg-gradient-to-r from-transparent via-champagne/50 to-transparent" />
-          <p className="font-sans text-[10px] font-medium uppercase tracking-[0.28em] text-white/42">
-            Origine
-          </p>
-          <h1 className="mt-6 font-wordmark text-[clamp(2rem,4.8vw,3.85rem)] font-normal leading-[1.06] tracking-[-0.02em] text-white/[0.98]">
-            The discipline of luminous restraint
-          </h1>
-        </div>
-      </section>
+      <PageHero
+        image={staticPageHeroes.about.image}
+        eyebrow={staticPageHeroes.about.eyebrow}
+        title={staticPageHeroes.about.title}
+      />
 
       <section className="section-padding">
         <div className="container-luxury mx-auto max-w-3xl text-center">
