@@ -8,33 +8,35 @@ import {
 
 export const LOGO_MORPH_SEQUENCE = [
   "BB",
-  "Be",
-  "Bea",
-  "Beau",
-  "Beaut",
-  "Beauty",
-  "BeautyB",
-  "BeautyBe",
-  "BeautyBel",
-  "BeautyBell",
-  "BeautyBel",
-  "BeautyBe",
-  "BeautyB",
-  "Beauty",
-  "Beaut",
-  "Beau",
-  "Bea",
-  "Be",
+  "BE",
+  "BEA",
+  "BEAU",
+  "BEAUT",
+  "BEAUTY",
+  "BEAUTYB",
+  "BEAUTYBE",
+  "BEAUTYBEL",
+  "BEAUTYBELL",
+  "BEAUTYBEL",
+  "BEAUTYBE",
+  "BEAUTYB",
+  "BEAUTY",
+  "BEAUT",
+  "BEAU",
+  "BEA",
+  "BE",
   "BB",
 ] as const;
 
 export type LogoMorphText = (typeof LOGO_MORPH_SEQUENCE)[number];
 
+export const LOGO_FULL_WORDMARK = "BEAUTYBELL" as const;
+
 /** Shared timing for header, footer, and all animated logos */
 export const MORPH_STEP_MS = 95;
 export const MORPH_HOLD_MS = 1100;
 
-const LogoMorphContext = createContext<LogoMorphText>("BeautyBell");
+const LogoMorphContext = createContext<LogoMorphText>(LOGO_FULL_WORDMARK);
 
 export function LogoMorphProvider({ children }: { children: ReactNode }) {
   const [index, setIndex] = useState(0);
@@ -53,7 +55,9 @@ export function LogoMorphProvider({ children }: { children: ReactNode }) {
 
     const current = LOGO_MORPH_SEQUENCE[index];
     const pause =
-      current === "BB" || current === "BeautyBell" ? MORPH_HOLD_MS : MORPH_STEP_MS;
+      current === "BB" || current === LOGO_FULL_WORDMARK
+        ? MORPH_HOLD_MS
+        : MORPH_STEP_MS;
 
     const timer = setTimeout(() => {
       setIndex((i) => (i + 1) % LOGO_MORPH_SEQUENCE.length);
@@ -62,7 +66,7 @@ export function LogoMorphProvider({ children }: { children: ReactNode }) {
     return () => clearTimeout(timer);
   }, [motionEnabled, index]);
 
-  const text = motionEnabled ? LOGO_MORPH_SEQUENCE[index] : "BeautyBell";
+  const text = motionEnabled ? LOGO_MORPH_SEQUENCE[index] : LOGO_FULL_WORDMARK;
 
   return (
     <LogoMorphContext.Provider value={text}>{children}</LogoMorphContext.Provider>

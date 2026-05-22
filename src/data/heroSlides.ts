@@ -17,7 +17,7 @@ export const heroSlides: HeroSlide[] = [
     image:
       "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=1280&q=80",
     video: "/videos/hero-6473746.mp4",
-    eyebrow: "Beauty Bell",
+    eyebrow: "BEAUTY BELL",
     title: "Atelier",
     titleLine2: "Skincare",
     cta: "Shop the collection",

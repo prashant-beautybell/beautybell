@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
-import { useLogoMorphText } from "../../context/LogoMorphContext";
+import {
+  LOGO_FULL_WORDMARK,
+  useLogoMorphText,
+} from "../../context/LogoMorphContext";
 
 type LogoVariant = "header" | "footer" | "compact";
 type LogoTone = "dark" | "light";
@@ -12,18 +15,18 @@ interface LogoProps {
   animated?: boolean;
 }
 
-const BEAUTY_ROOT = "Beauty";
+const BEAUTY_ROOT = "BEAUTY";
 
 const boxSizes: Record<LogoVariant, string> = {
-  header: "h-12 w-[14ch] sm:h-14",
-  footer: "h-12 w-[14ch] md:h-14",
-  compact: "h-10 w-[12ch]",
+  header: "h-10 w-[9.5ch] sm:h-12 sm:w-[11ch] md:h-14 md:w-[13ch]",
+  footer: "h-12 w-[13ch] md:h-14 md:w-[14ch]",
+  compact: "h-10 w-[10ch]",
 };
 
 const textSizes: Record<LogoVariant, string> = {
-  header: "text-[1.55rem] sm:text-[1.75rem] md:text-[2rem]",
+  header: "text-[1.15rem] sm:text-[1.55rem] md:text-[1.75rem] lg:text-[2rem]",
   footer: "text-[1.45rem] sm:text-[1.65rem] md:text-[1.85rem]",
-  compact: "text-[1.25rem]",
+  compact: "text-[1.2rem]",
 };
 
 const bbPalette = {
@@ -42,9 +45,9 @@ const morphPalettes = {
   },
 };
 
-/** One typeface, weight, and tracking for every morph frame (BB through BeautyBell). */
+/** One typeface, weight, and tracking for every morph frame (BB through BEAUTYBELL). */
 const logoTypeClass =
-  "font-wordmark inline-flex items-baseline whitespace-nowrap font-bold leading-none tracking-[0.04em]";
+  "font-wordmark inline-flex items-baseline whitespace-nowrap font-bold uppercase leading-none tracking-[0.06em]";
 
 function renderMorphText(text: string, sizeClass: string, tone: LogoTone) {
   const c = text === "BB" ? bbPalette : morphPalettes[tone];
@@ -92,7 +95,7 @@ function MorphingLogo({
   return (
     <span
       className={`logo-stage inline-flex items-center ${boxSizes[variant]} ${justify}`}
-      aria-label="Beauty Bell"
+      aria-label="BEAUTY BELL"
     >
       {renderMorphText(text, sizeClass, tone)}
     </span>
@@ -115,9 +118,9 @@ export function Logo({
   ) : (
     <span
       className={`logo-stage inline-flex items-center ${boxSizes[variant]} justify-start`}
-      aria-label="Beauty Bell"
+      aria-label="BEAUTY BELL"
     >
-      {renderMorphText("BeautyBell", textSizes[variant], resolvedTone)}
+      {renderMorphText(LOGO_FULL_WORDMARK, textSizes[variant], resolvedTone)}
     </span>
   );
 

@@ -1,6 +1,10 @@
 import { useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { useCookieConsent } from "../../context/CookieConsentContext";
+import { submitNewsletter } from "../../lib/forms";
+import { validateEmail } from "../../lib/validation";
 import { Logo } from "../brand/Logo";
+import { TurnstileWidget } from "../forms/TurnstileWidget";
 
 const linkClass =
   "font-sans text-[13px] font-normal leading-snug text-ink-light transition-colors hover:text-gold";
@@ -27,19 +31,28 @@ const supportLinks = [
 
 const legalLinks = [
   { label: "Privacy policy", href: "#" },
-  { label: "Cookie policy", href: "#" },
+  { label: "Cookie policy", action: "cookie-preferences" as const },
   { label: "Terms & conditions", href: "#" },
   { label: "Modern slavery statement", href: "#" },
   { label: "Applicant privacy policy", href: "#" },
   { label: "Promotional terms & conditions", href: "#" },
-  { label: "Your privacy choices", href: "#" },
+  { label: "Your privacy choices", action: "cookie-preferences" as const },
   { label: "Accessibility statement", href: "#" },
 ];
 
+type FooterLinkItem = {
+  label: string;
+  to?: string;
+  href?: string;
+  action?: "cookie-preferences";
+};
+
 function FooterLinkList({
   links,
+  onCookiePreferences,
 }: {
-  links: { label: string; to?: string; href?: string }[];
+  links: FooterLinkItem[];
+  onCookiePreferences?: () => void;
 }) {
   return (
     <ul className="space-y-2.5">
@@ -49,6 +62,14 @@ function FooterLinkList({
             <Link to={item.to} className={linkClass}>
               {item.label}
             </Link>
+          ) : item.action === "cookie-preferences" ? (
+            <button
+              type="button"
+              onClick={onCookiePreferences}
+              className={`${linkClass} text-left`}
+            >
+              {item.label}
+            </button>
           ) : (
             <a href={item.href ?? "#"} className={linkClass}>
               {item.label}
@@ -83,12 +104,72 @@ function SocialIcon({
 }
 
 export function Footer() {
+  const { openPreferences } = useCookieConsent();
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaKey, setCaptchaKey] = useState(0);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+    "idle"
+  );
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function handleNewsletter(e: FormEvent) {
+  const showCaptcha = email.length > 0;
+  const canSubmit =
+    showCaptcha && !!captchaToken && !emailError && status !== "loading";
+
+  function handleEmailChange(value: string) {
+    setEmail(value);
+    if (emailError) setEmailError("");
+    if (errorMessage) setErrorMessage("");
+    if (!value) {
+      setCaptchaToken("");
+      setCaptchaKey((k) => k + 1);
+    }
+  }
+
+  function handleEmailBlur() {
+    if (!email.trim()) {
+      setEmailError("");
+      return;
+    }
+    const err = validateEmail(email);
+    setEmailError(err ?? "");
+  }
+
+  async function handleNewsletter(e: FormEvent) {
     e.preventDefault();
-    if (email.trim()) setSubmitted(true);
+    const value = email.trim();
+    if (!value) return;
+
+    const validationError = validateEmail(value);
+    if (validationError) {
+      setEmailError(validationError);
+      return;
+    }
+    if (!captchaToken) {
+      setErrorMessage("Please complete the captcha.");
+      return;
+    }
+
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      await submitNewsletter(value, captchaToken);
+      setStatus("success");
+      setEmail("");
+      setEmailError("");
+      setCaptchaToken("");
+      setCaptchaKey((k) => k + 1);
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
+      setCaptchaToken("");
+      setCaptchaKey((k) => k + 1);
+    }
   }
 
   return (
@@ -141,7 +222,10 @@ export function Footer() {
 
           <div className="lg:col-span-3">
             <h3 className={columnHeading}>Legal</h3>
-            <FooterLinkList links={legalLinks} />
+            <FooterLinkList
+              links={legalLinks}
+              onCookiePreferences={openPreferences}
+            />
           </div>
 
           <div className="lg:col-span-1">
@@ -162,7 +246,7 @@ export function Footer() {
               appointments, and member-only releases before they reach the floor.
             </p>
 
-            {submitted ? (
+            {status === "success" ? (
               <p
                 className="mt-5 font-sans text-[13px] text-gold"
                 role="status"
@@ -170,7 +254,7 @@ export function Footer() {
                 Thank you — you&apos;re on the list.
               </p>
             ) : (
-              <form onSubmit={handleNewsletter} className="mt-5">
+              <form onSubmit={handleNewsletter} className="mt-5" noValidate>
                 <label htmlFor="footer-email" className="sr-only">
                   Email address
                 </label>
@@ -180,13 +264,20 @@ export function Footer() {
                     type="email"
                     required
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => handleEmailChange(e.target.value)}
+                    onBlur={handleEmailBlur}
+                    disabled={status === "loading"}
+                    aria-invalid={!!emailError}
+                    aria-describedby={
+                      emailError ? "footer-email-error" : undefined
+                    }
                     placeholder="Enter your email address here"
-                    className="w-full border border-ink/[0.14] bg-surface py-3 pl-4 pr-12 font-sans text-[13px] font-light text-ink placeholder:text-ink-faint focus:border-gold/50 focus:outline-none"
+                    className="w-full border border-ink/[0.14] bg-surface py-3 pl-4 pr-12 font-sans text-[13px] font-light text-ink placeholder:text-ink-faint focus:border-gold/50 focus:outline-none disabled:opacity-60"
                   />
                   <button
                     type="submit"
-                    className="absolute right-0 top-0 flex h-full w-11 items-center justify-center text-ink-light transition-colors hover:text-gold"
+                    disabled={!canSubmit}
+                    className="absolute right-0 top-0 flex h-full w-11 items-center justify-center text-ink-light transition-colors hover:text-gold disabled:opacity-50"
                     aria-label="Subscribe"
                   >
                     <svg
@@ -206,6 +297,29 @@ export function Footer() {
                     </svg>
                   </button>
                 </div>
+                {emailError && (
+                  <p
+                    id="footer-email-error"
+                    className="mt-2 font-sans text-[12px] text-brand"
+                    role="alert"
+                  >
+                    {emailError}
+                  </p>
+                )}
+                {showCaptcha && (
+                  <div className="mt-3 max-w-md">
+                    <TurnstileWidget
+                      key={captchaKey}
+                      onToken={setCaptchaToken}
+                      onExpire={() => setCaptchaToken("")}
+                    />
+                  </div>
+                )}
+                {status === "error" && errorMessage && (
+                  <p className="mt-2 font-sans text-[12px] text-brand" role="alert">
+                    {errorMessage}
+                  </p>
+                )}
               </form>
             )}
 
@@ -246,7 +360,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col gap-3 border-t border-ink/[0.08] pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-sans text-[11px] text-ink-faint">
-            &copy; {new Date().getFullYear()} Beauty Bell London. All rights reserved.
+            &copy; {new Date().getFullYear()} BEAUTY BELL. All rights reserved.
           </p>
           <p className="font-sans text-[11px] text-ink-faint">
             Made in the UK

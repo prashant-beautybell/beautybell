@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { ContactSection } from "../components/home/ContactSection";
 import { Hero } from "../components/home/Hero";
 import { SEO } from "../components/ui/SEO";
 
@@ -21,9 +22,6 @@ const BrandStory = lazy(() =>
 const Testimonials = lazy(() =>
   import("../components/home/Testimonials").then((m) => ({ default: m.Testimonials }))
 );
-const Newsletter = lazy(() =>
-  import("../components/home/Newsletter").then((m) => ({ default: m.Newsletter }))
-);
 
 function SectionFallback() {
   return <div className="min-h-[12rem] bg-surface" aria-hidden />;
@@ -43,7 +41,7 @@ export function HomePage() {
         <FeaturedProducts />
         <BrandStory />
         <Testimonials />
-        <Newsletter />
+        <ContactSection />
       </Suspense>
     </>
   );

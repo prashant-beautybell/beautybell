@@ -50,19 +50,21 @@ function UtilityAction({
   children,
   highlight = false,
   badge,
+  className = "",
 }: {
   label: string;
   children: ReactNode;
   highlight?: boolean;
   badge?: number;
+  className?: string;
 }) {
   return (
     <button
       type="button"
       aria-label={badge !== undefined ? `${label}, ${badge} items` : label}
-      className={`group flex h-10 w-10 flex-col items-center justify-center rounded-sm transition-colors hover:bg-ink/[0.06] ${
+      className={`group flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-sm transition-colors hover:bg-ink/[0.06] ${
         highlight ? "bg-ink/[0.06]" : ""
-      }`}
+      } ${className}`}
     >
       <span className="relative text-ink-light transition-colors group-hover:text-ink">
         {children}
@@ -144,8 +146,12 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-ink/[0.08] bg-white text-ink">
-      <div className="container-luxury relative flex h-[4.5rem] items-center md:h-[5rem]">
-        <Logo variant="header" tone="dark" animated={false} className="relative z-10 shrink-0" />
+      <div className="container-luxury relative flex h-[4.5rem] items-center justify-between gap-3 md:h-[5rem]">
+        <Logo
+          variant="header"
+          tone="dark"
+          className="relative z-10 min-w-0 max-w-[52%] shrink sm:max-w-[46%] md:max-w-none"
+        />
 
         <nav
           className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:flex lg:items-center lg:gap-8 xl:gap-10"
@@ -166,13 +172,13 @@ export function Header() {
           <MoreMenu />
         </nav>
 
-        <div className="relative z-10 ml-auto flex items-center gap-0.5 sm:gap-1">
+        <div className="relative z-10 flex shrink-0 items-center gap-0.5 sm:gap-1">
           <UtilityAction label="Search">
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.4} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </UtilityAction>
-          <UtilityAction label="Login">
+          <UtilityAction label="Login" className="hidden sm:flex">
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.4} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>

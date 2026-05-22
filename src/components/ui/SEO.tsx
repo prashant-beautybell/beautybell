@@ -7,7 +7,7 @@ interface SEOProps {
 
 export function SEO({ title, description }: SEOProps) {
   useEffect(() => {
-    document.title = `${title} | Beauty Bell`;
+    document.title = `${title} | BEAUTY BELL`;
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute("content", description);
   }, [title, description]);

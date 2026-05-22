@@ -1,6 +1,5 @@
-import { useState, type FormEvent } from "react";
 import { PageHero } from "../components/layout/PageHero";
-import { Button } from "../components/ui/Button";
+import { ContactForm } from "../components/forms/ContactForm";
 import { SEO } from "../components/ui/SEO";
 import { staticPageHeroes } from "../data/pageHeroes";
 
@@ -24,13 +23,6 @@ const faqs = [
 ];
 
 export function ContactPage() {
-  const [submitted, setSubmitted] = useState(false);
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setSubmitted(true);
-  }
-
   return (
     <>
       <SEO
@@ -47,89 +39,18 @@ export function ContactPage() {
 
       <section className="section-padding">
         <div className="container-luxury">
-          <div className="grid gap-16 lg:grid-cols-2">
+          <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
             <div>
-              <h2 className="font-wordmark text-2xl md:text-3xl">Send Us a Message</h2>
-              {submitted ? (
-                <p className="mt-6 text-brand" role="status">
-                  Thank you for your message. Our team will respond within 24
-                  hours.
-                </p>
-              ) : (
-                <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-                  <div className="grid gap-6 sm:grid-cols-2">
-                    <div>
-                      <label htmlFor="firstName" className="mb-2 block text-sm font-medium">
-                        First Name
-                      </label>
-                      <input
-                        id="firstName"
-                        name="firstName"
-                        type="text"
-                        required
-                        className="w-full border border-ink/15 bg-transparent px-4 py-3 text-sm outline-none focus:border-champagne focus:outline-none focus:ring-1 focus:ring-champagne/20"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="lastName" className="mb-2 block text-sm font-medium">
-                        Last Name
-                      </label>
-                      <input
-                        id="lastName"
-                        name="lastName"
-                        type="text"
-                        required
-                        className="w-full border border-ink/15 bg-transparent px-4 py-3 text-sm outline-none focus:border-champagne focus:outline-none focus:ring-1 focus:ring-champagne/20"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="mb-2 block text-sm font-medium">
-                      Email
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      className="w-full border border-ink/15 bg-transparent px-4 py-3 text-sm outline-none focus:border-champagne focus:outline-none focus:ring-1 focus:ring-champagne/20"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="subject" className="mb-2 block text-sm font-medium">
-                      Subject
-                    </label>
-                    <select
-                      id="subject"
-                      name="subject"
-                      className="w-full border border-ink/15 bg-transparent px-4 py-3 text-sm outline-none focus:border-champagne focus:outline-none focus:ring-1 focus:ring-champagne/20"
-                    >
-                      <option>General Inquiry</option>
-                      <option>Order Support</option>
-                      <option>Product Question</option>
-                      <option>Returns</option>
-                      <option>Press & Partnerships</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="mb-2 block text-sm font-medium">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      required
-                      className="w-full resize-none border border-ink/15 bg-transparent px-4 py-3 text-sm outline-none focus:border-champagne focus:outline-none focus:ring-1 focus:ring-champagne/20"
-                    />
-                  </div>
-                  <Button type="submit">Send Message</Button>
-                </form>
-              )}
+              <h2 className="font-wordmark text-2xl md:text-3xl">Send us a message</h2>
+              <p className="mt-4 font-sans text-sm font-light leading-relaxed text-ink-light">
+                Share your enquiry below and our concierge will respond within one
+                business day.
+              </p>
+              <ContactForm className="mt-8" source="Contact page" idPrefix="contact-page" />
             </div>
 
             <div>
-              <h2 className="font-wordmark text-2xl md:text-3xl">Customer Service</h2>
+              <h2 className="font-wordmark text-2xl md:text-3xl">Customer service</h2>
               <div className="mt-8 space-y-8">
                 <div>
                   <h3 className="text-sm font-medium uppercase tracking-wider">Email</h3>
@@ -154,16 +75,16 @@ export function ContactPage() {
                     Hours
                   </h3>
                   <p className="mt-2 text-ink-light">
-                    Monday – Friday: 9am – 6pm EST
+                    Monday – Friday: 9am – 6pm GMT
                     <br />
-                    Saturday: 10am – 4pm EST
+                    Saturday: 10am – 4pm GMT
                     <br />
                     Sunday: Closed
                   </p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium uppercase tracking-wider">
-                    Follow Us
+                    Follow us
                   </h3>
                   <div className="mt-3 flex gap-6">
                     {["Instagram", "Pinterest", "TikTok"].map((social) => (
@@ -188,7 +109,7 @@ export function ContactPage() {
           <header className="mb-12 text-center">
             <p className="eyebrow mb-3">Questions</p>
             <h2 className="font-wordmark text-3xl md:text-4xl">
-              Frequently Asked Questions
+              Frequently asked questions
             </h2>
           </header>
           <div className="space-y-4">

@@ -70,28 +70,35 @@ export function AboutPage() {
               />
             </div>
             <div>
-              <p className="eyebrow mb-4">A Message From Our Founder</p>
+              <p className="eyebrow mb-4">From the Founder</p>
               <h2 className="font-wordmark text-3xl md:text-4xl">
-                Dear Beauty Enthusiast,
+                Built to perform. Made to stay.
               </h2>
               <div className="mt-6 space-y-4 text-ink-light">
                 <p>
-                  At Beauty Bell we are building an atelier line where skincare
-                  behaves with discipline — actives in measured harmony, textures
-                  that layer without noise, and finishes that let the complexion
-                  speak first.
+                  Beauty Bell is an atelier, not a trend cycle. We formulate with
+                  discipline precise actives, clean layering, finishes that hold up
+                  under real use. The goal is simple: skin that looks composed, not
+                  covered.
                 </p>
                 <p>
-                  Our aim is luxury that means transparency in composition, respect
-                  for the skin barrier, and presentation worthy of the ritual itself.
-                  Every capsule we release is judged against one question: does it
-                  earn a permanent place in a considered routine, not just a season
-                  on the shelf.
+                  We are building a dedicated men&apos;s range alongside our core line
+                  because strong skin is not gendered but the products should match
+                  how you actually live. Straight talk on ingredients. Respect for the
+                  barrier. Formulas and packaging worthy of a routine you keep, not a
+                  purchase you regret.
                 </p>
-                <p className="font-wordmark text-lg italic text-ink">
-                  With warmth,
-                  <br />
+                <p>
+                  Every release is judged on one standard: would you still reach for it
+                  a year from now morning shave, post-gym, or end of day without
+                  thinking twice.
+                </p>
+                <p className="font-wordmark text-lg text-ink">
                   Harry Davey
+                  <br />
+                  <span className="font-sans text-sm font-normal not-italic text-ink-light">
+                    Founder &amp; Director
+                  </span>
                 </p>
               </div>
             </div>
